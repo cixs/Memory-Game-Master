@@ -17,7 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -52,8 +53,8 @@ h1 {
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    height: calc(25% - 20px);
+    width: calc(25% - 20px);
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -63,12 +64,11 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-    transition: transform 0.5s;
 }
 
 .deck .card.open {
     transform: rotateY(180deg);
-    transition-timing-function:cubic-bezier(0.1, 0.7, 0.3, 0.1);
+    transition-duration: 0.3s;
     background: #02b3e4;
     cursor: default;
 }
@@ -84,24 +84,23 @@ h1 {
 }
 
 .deck .card.unmatch {
-    transform: scale(1.2,1.2);
-    transition-duration: 0.7s;
+    transform: scale(1.2, 1.2);
+    transition-duration: 0.3s;
     background: #ff6701;
     cursor: default;
 }
-.no-transition{
-    transition: none !important;
-}
-.card:hover{
+
+.card:hover {
     box-shadow: 5px 5px 20px 0 rgba(255, 255, 0, 0.5);
 }
+
 /*
  * Styles for the Score Panel
  */
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 500px;
     margin-bottom: 10px;
 }
 
@@ -116,7 +115,43 @@ h1 {
     list-style: none;
     display: inline-block;
 }
-
+.level {
+    display: inline-block;
+    margin-left: 30px;
+    cursor: pointer;
+    color: rgb(255, 0, 0);
+}
+.levels-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+    padding: 10px 10px;
+    margin-left: 20px;
+    z-index: 1;
+}
+.levels-item{
+    width:100%;
+    color:#808080;
+}
+.levels-item:hover{
+    color:#f00;
+}
+.game-level{
+    margin-left: 30px;  
+    color:#f00;
+}
+.timer{
+    display: inline-block;
+    margin-left: 30px;
+    background-color: #004d04; 
+    color:rgb(181, 253, 147);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.level:hover .levels-menu {
+    display: block;
+}
 .score-panel .restart {
     float: right;
     cursor: pointer;

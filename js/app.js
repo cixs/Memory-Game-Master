@@ -2,6 +2,7 @@
  * Create a list that holds all of your cards
  */
 var objects = [
+    /*
     "anchor",
     "bicycle",
     "bolt",
@@ -10,15 +11,16 @@ var objects = [
     "diamond",
     "leaf",
     "paper-plane-o"
+    */
 ]; //eigth objects array
 
-var cardSet = objects.concat(objects); //double objects array because every object appears on two cards
+var cardSet = [];
 var previousOpened = null; //store an opened card, waiting to be compared to another one 
 var moves = 0, // number of pairs of flipped cards
     locked = 0, // number of pairs of matching flipped cards
-    ratingStars = 5, //from 0 to 5, depending of ratingPercent
-    maxMoves = cardSet.length; //for stars rating, to be compared with moves and locked
+    ratingStars = 5; //from 0 to 5, depending of ratingPercent
 
+var level = "beginner";
 
 /*
  * Display the cards on the page
@@ -57,7 +59,68 @@ function shuffle(array)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+//------------------------------------------------------------
+function createObjectsArray()
+//------------------------------------------------------------
+{
+//this function fills the objects array with objects selected from scratchObjects bellow
 
+    var scratchObjects = [// 26 objects
+    "anchor",
+    "bicycle",
+    "bolt",
+    "bomb",
+    "cube",
+    "diamond",
+    "leaf",
+    "paper-plane-o",
+    //first 8 objects used for the beginner level (less cards and very different easy-to-remember objects)
+    "toggle-down",
+    "toggle-left",
+    "toggle-right",
+    "toggle-up",
+    "user",
+    "user-circle",
+    "user-circle-o",
+    "user-o",
+    //cards from 9 to 16 (8 cards) used for intermediate level ( still less cards but almost alike objects that needs more attention)
+    "hourglass",
+    "hourglass-1",
+    "hourglass-2",
+    "hourglass-3",
+    "hourglass-end",
+    "thermometer-0",
+    "thermometer-1",
+    "thermometer-2",
+    "thermometer-3",
+    "thermometer-4"
+    //from 9 to 26 (18 cards) used for top level ( more cards of almost alike objects that needs very much attention)
+];
+    var iStart, iEnd;
+
+    if(level === "beginner")
+    {
+        iStart = 0;
+        iEnd = 8;
+    }
+    else if(level === "intermediate")
+    {
+        iStart = 8;
+        iEnd = 16;
+    }
+    else if(level === "chuck norris")
+    {
+        iStart = 8;
+        iEnd = 26;
+    }
+
+    objects.length = 0;//remove the previous objects and get a clean array to fil
+    for(var i = iStart; i < iEnd; i++)
+    {
+        objects.push(scratchObjects[i]);
+    }
+    cardSet = objects.concat(objects); //double objects array because every object appears on two cards
+}
 //------------------------------------------------
 function display()
 //-----------------------------------------------
@@ -96,8 +159,26 @@ document.addEventListener("click", function (event)
             {
                 compareCards(event.target);
             }
-        } else if (classNameString === "restart" || classNameString === "fa fa-repeat") {
-            restart();
+        } 
+        else if(classNameString === "levels-item")
+        {
+            var strItem = event.target.innerHTML;
+
+            if(strItem != level)
+            {
+                if (confirm("This will stop the game and delete all you have done. Are you sure?"))
+                {
+                    document.getElementsByClassName("game-level")[0].innerHTML = strItem;
+                    restart(strItem);//restart with different level
+                }
+            }
+        }
+        else if (classNameString === "restart" || classNameString === "fa fa-repeat")
+        {
+            if (confirm("This will stop the game and delete all you have done. Are you sure?"))
+            {
+                restart(level);//just restart, keep the same level
+            }
         }
     });
 
@@ -114,6 +195,7 @@ function compareCards(card)
         {
             lockCards(card, previousOpened); //then lock them opened
             modifyScores(true);
+            checkFinished();//verify if the game it's over (when all cards are locked)
         }
         else //not same cards?
         {
@@ -154,14 +236,12 @@ function restoreCards(card1, card2)
     setTimeout(function(){
         card1.className = "card";
         card2.className = "card";
-        card1.style.transition = '';
-        card2.style.transition = '';
+        card1.style.transition = "";
+        card2.style.transition = "";
     },500);
-        // (?!)it doesn't work passing 'resetCard' function as the first argument on setTimeout
-        //HAVE TO CHECK IT OUT LATER
 
-    card1.style.transition = 'none';
-    card2.style.transition = 'none';
+    card1.style.transition = "none";
+    card2.style.transition = "none";
 
     card1.className = "card show unmatch";
     card2.className = "card show unmatch";
@@ -248,17 +328,53 @@ function redrawScorePanel(newStars)
     ratingStars = newStars;
 }
 //--------------------------------------------------
-function restart()
+function restart(newLevel)
+//--------------------------------------------------
+{
+    var cardDeck = document.getElementById("cards-board");
+    emptyCardsBoard();
+
+    level = newLevel;
+    previousOpened = null; 
+    moves = 0;
+    locked = 0;
+    ratingStars = 5;
+
+    createObjectsArray();
+
+ //   shuffle(cardSet);
+    display(cardSet);
+    document.getElementsByClassName("moves")[0].innerHTML = moves;
+    redrawScorePanel(ratingStars);
+
+}
+//--------------------------------------------------
+function emptyCardsBoard()
 //--------------------------------------------------
 {
     var cardDeck = document.getElementById("cards-board");
     while (cardDeck.firstChild) {
         cardDeck.removeChild(cardDeck.firstChild);
     } //remove all previous cards
-
-    shuffle(cardSet);
-    display(cardSet);
 }
+//-----------------------------------------------------
+function checkFinished()
+//-----------------------------------------------------
+{
+    //check if all cards are locked and show popup
+    if(locked === objects.length)
+        popupCongrats();
+}
+//-----------------------------------------------------
+ function popupCongrats()
+ //-----------------------------------------------------
+ {
+    var strCongrats = "Congratulations!\nYou won this game.\nDo you want to play again?"
+    if (confirm(strCongrats))
+    {
+        restart(level);
+    }
+ }
 //-----------------------------------------------------
 function resetCard(card1, card2)
 //-----------------------------------------------------
@@ -267,5 +383,9 @@ function resetCard(card1, card2)
     card1.className = "card";
     card2.className = "card";
 };
+
+
+createObjectsArray();
 //shuffle(cardSet);
 display(cardSet);
+
