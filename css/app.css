@@ -83,6 +83,15 @@ h1 {
     font-size: 33px;
 }
 
+.deck .card.unmatch {
+    transform: rotate(10deg);
+    transition-duration: 0.5s;
+    background: #e40202;
+    cursor: default;
+}
+.card:hover{
+    box-shadow: 5px 5px 20px 0 rgba(255, 255, 0, 0.5);
+}
 /*
  * Styles for the Score Panel
  */
