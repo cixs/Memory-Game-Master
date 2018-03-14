@@ -84,10 +84,13 @@ h1 {
 }
 
 .deck .card.unmatch {
-    transform: rotate(10deg);
-    transition-duration: 0.5s;
-    background: #e40202;
+    transform: scale(1.2,1.2);
+    transition-duration: 0.7s;
+    background: #ff6701;
     cursor: default;
+}
+.no-transition{
+    transition: none !important;
 }
 .card:hover{
     box-shadow: 5px 5px 20px 0 rgba(255, 255, 0, 0.5);
