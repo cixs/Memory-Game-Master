@@ -20,8 +20,6 @@ body {
     background: #ffffff url('../img/geometry2.png');
     /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
-    min-width: 480px;
-    max-width: 600px;
 }
 
 .container {
@@ -42,7 +40,8 @@ h1 {
 
 .deck {
     width: auto;
-    min-height: 680px;
+    min-width: 400px;
+    max-width: 640px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;

@@ -20,7 +20,7 @@ var moves = 0, // number of pairs of flipped cards
     locked = 0, // number of pairs of matching flipped cards
     ratingStars = 5; //from 0 to 5, depending of ratingPercent
 
-var level = "beginner";
+var level = "";
 var hours = 0,
     mins = 0,
     secs = 0; //used by the timer function
@@ -114,15 +114,14 @@ function createObjectsArray()
     }
 
     objects.length = 0; //remove the previous objects and get a clean array to fil
-    for (var i = iStart; i < iEnd; i++) 
-    {
+    for (var i = iStart; i < iEnd; i++) {
         objects.push(scratchObjects[i]);
     }
     cardSet = objects.concat(objects); //double objects array because every object appears on two cards
 }
 
 //------------------------------------------------
-function calcAndApplySizes()
+var calcAndApplySizes = function ()
 //-----------------------------------------------
 {
     //calculate cards sizes to fits on different screen sizes
@@ -142,7 +141,7 @@ function calcAndApplySizes()
     } else {
         //level is chuck norris
         //it mean there are 36 cards, also 6 rows and 6 columns
-        cardW = (Math.round(cardDeck.offsetWidth / 6) - 20).toString() + "px"; // subtrack 30 to have some space around the card
+        cardW = (Math.round(cardDeck.offsetWidth / 6) - 15).toString() + "px"; // subtrack 30 to have some space around the card
     }
     cardH = cardW; //square shape
     for (var i = 0; i < cards.length; i++) {
@@ -195,15 +194,30 @@ document.addEventListener("click", function (event)
             if (strItem != level) {
                 if (confirm("This will stop the game and delete all you have done. Are you sure?")) {
                     document.getElementsByClassName("game-level")[0].innerHTML = strItem;
-                    restart(strItem); //restart with different level
+                    restart(strItem); //restart on a different difficulty level
                 }
             }
         } else if (classNameString === "restart" || classNameString === "fa fa-repeat") {
             if (confirm("This will stop the game and delete all you have done. Are you sure?")) {
-                restart(level); //just restart, keep the same level
+                restart(level); //just restart, keep the same difficulty level
             }
         }
     });
+
+//------------------------------------------------------------
+var addEvent = function (object, type, callback)
+//------------------------------------------------------------    
+{
+    //addEvent from https://stackoverflow.com/questions/641857/javascript-window-resize-event
+    if (object == null || typeof (object) == "undefined") return;
+    if (object.addEventListener) {
+        object.addEventListener(type, callback, false);
+    } else if (object.attachEvent) {
+        object.attachEvent("on" + type, callback);
+    } else {
+        object["on" + type] = callback;
+    }
+};
 
 //------------------------------------------------------------
 function compareCards(card)
@@ -323,7 +337,6 @@ function calculateRatingStars()
     //redraw the score panel
     if (tempStars != ratingStars) //prevent redraw continuoulsy the same content
         redrawScorePanel(tempStars);
-    console.log(tempStars, ratingStars, ratingPercent);
 }
 //--------------------------------------------------
 function redrawScorePanel(newStars)
@@ -331,13 +344,9 @@ function redrawScorePanel(newStars)
 {
     var starsPanel = document.getElementsByClassName("stars")[0];
     var stars = starsPanel.getElementsByTagName("li");
-    for (var i = stars.length; i > 0; i--) 
-    {
+    for (var i = stars.length; i > 0; i--) {
         if (newStars < i)
-        {
             stars[i - 1].children[0].className = "fa fa-star-o";
-            console.log(stars[i - 1], "," , stars[i - 1].children[0].className);
-        }
         else
             stars[i - 1].children[0].className = "fa fa-star";
     }
@@ -347,33 +356,28 @@ function redrawScorePanel(newStars)
 function restart(newLevel)
 //--------------------------------------------------
 {
-    var cardDeck = document.getElementById("cards-board");
     emptyCardsBoard();
-
-    level = newLevel;
-    previousOpened = null;
-    moves = 0;
-    locked = 0;
-    ratingStars = 5;
-
-    createObjectsArray();
-
-    shuffle(cardSet);
-    display(cardSet);
-    document.getElementsByClassName("moves")[0].innerHTML = moves;
-    redrawScorePanel(ratingStars);
-    resetTimer();
-    idTimer = setTimer();
-
+    startGame(newLevel);
 }
 //--------------------------------------------------
 function emptyCardsBoard()
 //--------------------------------------------------
 {
+    //reset all game variables, ready to start a new game
     var cardDeck = document.getElementById("cards-board");
+
     while (cardDeck.firstChild) {
         cardDeck.removeChild(cardDeck.firstChild);
     } //remove all previous cards
+
+    resetTimer();
+
+    previousOpened = null;
+    moves = 0;
+    locked = 0;
+    ratingStars = 5;
+    document.getElementsByClassName("moves")[0].innerHTML = moves;
+    redrawScorePanel(ratingStars);
 }
 //-----------------------------------------------------
 function checkFinished()
@@ -396,7 +400,7 @@ function popupCongrats()
 function resetCard(card1, card2)
 //-----------------------------------------------------
 {
-    //reset card to initial state 
+    //reset card to initial state (hidden)
     card1.className = "card";
     card2.className = "card";
 };
@@ -441,7 +445,15 @@ function resetTimer()
     hours = 0;
     clearInterval(idTimer);
 }
-createObjectsArray();
-shuffle(cardSet);
-display(cardSet);
-idTimer = setTimer();
+//-----------------------------------------------------
+function startGame(strLevel)
+//-----------------------------------------------------
+{
+    level = strLevel;
+    createObjectsArray();
+    shuffle(cardSet);
+    display(cardSet);
+    idTimer = setTimer();
+}
+addEvent(window, "resize", calcAndApplySizes);
+startGame("beginner");
