@@ -1,6 +1,6 @@
 # Memory Game Project
 
-##The game randomly shuffles the cards. A user wins once all cards have successfully been matched.
+#### The game randomly shuffles the cards. A user wins once all cards have successfully been matched.
 
 When a user wins the game, a modal appears to congratulate the player and ask if they want to play again.
 
@@ -11,5 +11,4 @@ The game displays a **star rating** (from 1 to 5) that reflects the player's per
 When the player starts a game, a displayed **timer** start. Once the player wins the game, the timer stops. Also game displays the current **number of moves** a player has made.
 
 
-####Project for Udacity's Front-End Web Developer Nanodegree Program
-
+###### _Project for Udacity's Front-End Web Developer Nanodegree Program_

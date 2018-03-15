@@ -100,7 +100,7 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
+    text-align: center;
     width: 460px;
     margin-bottom: 10px;
 }
@@ -119,9 +119,9 @@ h1 {
 
 .level {
     display: inline-block;
-    margin-left: 30px;
     cursor: pointer;
     color: rgb(255, 0, 0);
+    margin-left:30px;
 }
 
 .levels-menu {
@@ -130,7 +130,6 @@ h1 {
     background-color: #f9f9f9;
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
     padding: 10px 10px;
-    margin-left: 20px;
     z-index: 1;
 }
 
@@ -144,17 +143,16 @@ h1 {
 }
 
 .game-level {
-    margin-left: 30px;
     color: #f00;
 }
 
 .timer {
     width: 75px;
     display: inline-block;
-    margin-left: 30px;
     background-color: #004d04;
     color: rgb(181, 253, 147);
     padding-left: 5px;
+    margin-left:30px;
 }
 
 .level:hover .levels-menu {
@@ -164,4 +162,17 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    margin-left:30px;
+}
+
+footer {
+    min-width: 400px;
+    max-width: 640px;
+    margin:auto;
+    color: rgba(112, 112, 112, 0.527);
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    padding-top: 0.25em;
+    border-top: 1px solid #888;
 }

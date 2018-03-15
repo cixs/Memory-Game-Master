@@ -121,7 +121,7 @@ function createObjectsArray()
 }
 
 //------------------------------------------------
-var calcAndApplySizes = function ()
+var calcAndApplySizes = function ()//callback for resize 
 //-----------------------------------------------
 {
     //calculate cards sizes to fits on different screen sizes
@@ -137,11 +137,11 @@ var calcAndApplySizes = function ()
 
     if (level === "beginner" || level === "intermediate") {
         //it mean there are 16 cards, also 4 rows and 4 columns
-        cardW = (Math.round(cardDeck.offsetWidth / 4) - 30).toString() + "px"; // subtrack 40 to have room around the card
+        cardW = (Math.round(cardDeck.offsetWidth / 4) - 30).toString() + "px"; // subtrack 30 to have room around the card
     } else {
         //level is chuck norris
         //it mean there are 36 cards, also 6 rows and 6 columns
-        cardW = (Math.round(cardDeck.offsetWidth / 6) - 15).toString() + "px"; // subtrack 30 to have some space around the card
+        cardW = (Math.round(cardDeck.offsetWidth / 6) - 15).toString() + "px"; // subtrack 15 to have some space around the card
     }
     cardH = cardW; //square shape
     for (var i = 0; i < cards.length; i++) {
@@ -205,7 +205,7 @@ document.addEventListener("click", function (event)
     });
 
 //------------------------------------------------------------
-var addEvent = function (object, type, callback)
+function addEvent(object, type, callback)
 //------------------------------------------------------------    
 {
     //addEvent from https://stackoverflow.com/questions/641857/javascript-window-resize-event
@@ -321,7 +321,7 @@ function calculateRatingStars()
     var ratingPercent = 1 - (shouldBePercent - currentPercent);
     var tempStars;
 
-    if (ratingPercent >= 0 && ratingPercent <= 0.16) {
+    if (ratingPercent <= 0.16) {//ratingPercent can go negative if there are to many moves 
         tempStars = 0;
     } else if (ratingPercent > 0.16 && ratingPercent <= 0.32) {
         tempStars = 1;
