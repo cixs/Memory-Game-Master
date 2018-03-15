@@ -147,10 +147,12 @@ h1 {
 }
 
 .timer {
-    width: 75px;
+    font-family: "Digital-7";
+    font-size:24px;
+    width: 100px;
     display: inline-block;
-    background-color: #004d04;
-    color: rgb(181, 253, 147);
+    background-color: #dddddd;
+    color: rgb(0, 0, 0);
     padding-left: 5px;
     margin-left:30px;
 }

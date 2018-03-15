@@ -11,12 +11,4 @@ The game displays a **star rating** (from 1 to 5) that reflects the player's per
 When the player starts a game, a displayed **timer** start. Once the player wins the game, the timer stops. Also game displays the current **number of moves** a player has made.
 
 
-<<<<<<< HEAD
 ###### _Project for Udacity's Front-End Web Developer Nanodegree Program_
-||||||| merged common ancestors
-####Project for Udacity's Front-End Web Developer Nanodegree Program
-
-=======
-###### _Project for Udacity's Front-End Web Developer Nanodegree Program_
-
->>>>>>> ad19720d13d96025912cc108254f50a4e78b7e13
