@@ -384,14 +384,25 @@ function checkFinished()
 //-----------------------------------------------------
 {
     //check if all cards are locked and show popup
-    if (locked === objects.length)
+    if (locked === objects.length) {
         popupCongrats();
+    }
 }
 //-----------------------------------------------------
 function popupCongrats()
 //-----------------------------------------------------
 {
-    var strCongrats = "Congratulations!\nYou won this game.\nDo you want to play again?"
+    clearInterval(idTimer); // stop timer
+
+    var strCongrats = "Congratulations!\nYou finished this game in only \n";
+    if (hours > 0)
+        strCongrats += hours + " hours, ";
+    else if (mins > 0)
+        strCongrats += mins + " minutes, ";
+
+    strCongrats += secs + " seconds.\n";
+    strCongrats += "You've got " + ratingStars + " stars.\nDo you want to play again?";
+
     if (confirm(strCongrats)) {
         restart(level);
     }
