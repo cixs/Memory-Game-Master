@@ -1,4 +1,10 @@
 .DS_Store
-.htmlhintrc
-.stylelintrc
-.eslintrc.json
+.html
+hintrc
+.style
+lintrc
+.es
+lintrc.json
+
+.vscode/launch.json
+.vscode/settings.json
