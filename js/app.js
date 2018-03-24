@@ -12,8 +12,10 @@ let moves = 0, // number of pairs of flipped cards
 let level = "";
 let hours = 0,
     mins = 0,
-    secs = 0; //used by the timer function
-idTimer = 0;
+    secs = 0, //used by the timer function
+    idTimer = 0;
+let sound = new Audio("sounds/swipe.ogg");
+
 
 /*
  * Display the cards on the page
@@ -182,7 +184,7 @@ document.addEventListener("click", function (event)
     //------------------------------------------------------------
     {
         //set up the event listener for a card
-
+        sound.play();
         let classNameString = event.target.className.toLowerCase();
         if (classNameString === "card") {
             flipClickedCard(event.target);
@@ -445,32 +447,32 @@ function popupCongrats()
     strCongrats += secs + " seconds. ";
     strCongrats += "You've got " + ratingStars + " stars. Wanna play again?";
 
-//popus to congrats the player
-// I use sweetalert2 popus from https://sweetalert2.github.io/
+    //popus to congrats the player
+    // I use sweetalert2 popus from https://sweetalert2.github.io/
     swal({
-        type: 'success',
-        title: 'Good job!\n',
-        text: strCongrats,
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonText: 'Yes, please!',
-        cancelButtonText: 'Umm, maybe later!',
-        confirmButtonColor: "green",
-        cancelButtonColor: "red",
-        animation: true,
-        customClass: 'animated tada'
-    })
-    .then((result) => {
-        if (result.value) {
-            restart(level); //restart on a different difficulty level
-        } else {
-            swal(
-                'Ok, take your time!',
-                "I'll be here",
-                'success'
-            )
-        }
-    })
+            type: 'success',
+            title: 'Good job!\n',
+            text: strCongrats,
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Yes, please!',
+            cancelButtonText: 'Umm, maybe later!',
+            confirmButtonColor: "green",
+            cancelButtonColor: "red",
+            animation: true,
+            customClass: 'animated tada'
+        })
+        .then((result) => {
+            if (result.value) {
+                restart(level); //restart on a different difficulty level
+            } else {
+                swal(
+                    'Ok, take your time!',
+                    "I'll be here",
+                    'success'
+                )
+            }
+        })
 }
 //-----------------------------------------------------
 function resetCard(card1, card2)
